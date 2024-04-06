@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
-import api from '@/api';
+import api from '@/axios/api';
+import { startTimeWorkedInterval, stopTimeWorkedInterval } from '@/helpers/helpers'
 
 export const useTimeTrackerStore = defineStore('timeTracker', {
   state: () => ({
@@ -7,6 +8,7 @@ export const useTimeTrackerStore = defineStore('timeTracker', {
     timeWorked: 0,
     employeeId: "",
     coordinates: {},
+    interval: null
   }),
   actions: {
     async clockIn() {
@@ -42,28 +44,19 @@ export const useTimeTrackerStore = defineStore('timeTracker', {
     async getWorkEntries() {
       try {
         const response = await api.get('/work-entries');
-        const workEntriesData = response.data.data
-        const mostRecentWorkEntry = workEntriesData[0]
-        const employeeData = mostRecentWorkEntry.employee
+        const mostRecentWorkEntryData = response.data.data[0]
+        const employeeData = mostRecentWorkEntryData.employee
         
         this.employeeId = employeeData.id
-        this.coordinates = mostRecentWorkEntry.workEntryIn.coordinates
+        this.coordinates = mostRecentWorkEntryData.workEntryIn.coordinates
         
-        if (mostRecentWorkEntry) {
-          if (employeeData.workStatus === 'online') {
-            this.isClockedIn = true
-            this.timeWorked =  Math.floor((Date.now() - new Date(mostRecentWorkEntry.workEntryIn.date).getTime()) / 1000);
-            clearInterval(this.interval)
-            this.interval = setInterval(() => {
-              this.timeWorked++
-            }, 1000);
-          } else {
-            this.isClockedIn = false
-            this.timeWorked = mostRecentWorkEntry.workedSeconds
-          }
+        if (mostRecentWorkEntryData) {
+          this.isClockedIn = employeeData.workStatus === 'online';
+          this.timeWorked = this.isClockedIn ? Math.floor((Date.now() - new Date(mostRecentWorkEntryData.workEntryIn.date).getTime()) / 1000) : mostRecentWorkEntryData.workedSeconds;
+          this.isClockedIn ? startTimeWorkedInterval(this) : stopTimeWorkedInterval(this);
         }
-      } catch {
-        console.error("Error getting work entries:");
+      } catch (error) {
+        console.error("Error getting work entries:", error);
       }
     }
   }

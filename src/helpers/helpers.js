@@ -5,6 +5,17 @@ const formatTime = seconds => {
   return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 }
 
+const startTimeWorkedInterval = (store) => {
+  clearInterval(store.interval);
+  store.interval = setInterval(() => store.timeWorked++, 1000);
+ };
+ 
+ const stopTimeWorkedInterval = (store) => {
+  clearInterval(store.interval);
+ };
+
 export {
-  formatTime
+  formatTime,
+  startTimeWorkedInterval,
+  stopTimeWorkedInterval
 }
