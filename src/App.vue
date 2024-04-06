@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import TimeTracker from './components/TimeTracker.vue';
+import TimeTracker from '@/components/TimeTracker.vue';
 
 export default {
   name: 'App',

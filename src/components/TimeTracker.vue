@@ -14,10 +14,10 @@
 </template>
 
 <script>
-import Button from "./Button.vue";
+import Button from "@/components/Button.vue";
 import { mapActions, mapState } from "pinia";
-import { useTimeTrackerStore } from '../store'
-import { formatTime } from "../helpers/helpers";
+import { useTimeTrackerStore } from '@/store'
+import { formatTime } from "@/helpers/helpers";
 
 export default {
   name: "TimeTracker",
@@ -40,13 +40,7 @@ export default {
   methods: {
     ...mapActions(useTimeTrackerStore, ['getWorkEntries', 'clockIn', 'clockOut']),
     onButtonClick() {
-      if (this.isClockedIn) {
-        this.clockOut()
-        this.buttonText = 'Entrar'
-      } else {
-        this.clockIn()
-        this.buttonText = 'Salir'
-      }
+      this.isClockedIn ? this.clockOut() : this.clockIn()
     }
   },
   mounted() {

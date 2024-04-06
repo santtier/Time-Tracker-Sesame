@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia'
-import api from '../api';
+import api from '@/api';
 
 export const useTimeTrackerStore = defineStore('timeTracker', {
   state: () => ({
     isClockedIn: false,
     timeWorked: 0,
     employeeId: "",
-    coordinates: {}
+    coordinates: {},
   }),
   actions: {
     async clockIn() {
@@ -19,7 +19,7 @@ export const useTimeTrackerStore = defineStore('timeTracker', {
 
       const workEntryData = await workEntry.data.data
 
-      this.timeWorked = workEntryData.workedSeconds
+      this.timeWorked = 0
       this.isClockedIn = true
       clearInterval(this.interval)
       this.interval = setInterval(() => {
@@ -42,25 +42,24 @@ export const useTimeTrackerStore = defineStore('timeTracker', {
     async getWorkEntries() {
       try {
         const response = await api.get('/work-entries');
-
         const workEntriesData = response.data.data
-        const lastWorkEntry = workEntriesData[workEntriesData.length - 1]
-        const employeeData = lastWorkEntry.employee
+        const mostRecentWorkEntry = workEntriesData[0]
+        const employeeData = mostRecentWorkEntry.employee
         
         this.employeeId = employeeData.id
-        this.coordinates = lastWorkEntry.workEntryIn.coordinates.latitude ? lastWorkEntry.workEntryIn.coordinates : lastWorkEntry.workEntryOut.coordinates
+        this.coordinates = mostRecentWorkEntry.workEntryIn.coordinates
         
-        if (lastWorkEntry) {
+        if (mostRecentWorkEntry) {
           if (employeeData.workStatus === 'online') {
             this.isClockedIn = true
-            this.timeWorked =  Math.floor((Date.now() - new Date(lastWorkEntry.workEntryIn.date).getTime()) / 1000);
+            this.timeWorked =  Math.floor((Date.now() - new Date(mostRecentWorkEntry.workEntryIn.date).getTime()) / 1000);
             clearInterval(this.interval)
             this.interval = setInterval(() => {
               this.timeWorked++
             }, 1000);
           } else {
             this.isClockedIn = false
-            this.timeWorked = lastWorkEntry.workedSeconds
+            this.timeWorked = mostRecentWorkEntry.workedSeconds
           }
         }
       } catch {
