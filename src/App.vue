@@ -1,11 +1,16 @@
-<script setup>
-
-</script>
-
 <template>
- 
+  <div class="container mx-auto">
+    <TimeTracker />
+  </div>
 </template>
 
-<style>
+<script>
+import TimeTracker from './components/TimeTracker.vue';
 
-</style>
+export default {
+  name: 'App',
+  components: {
+    TimeTracker
+  }
+}
+</script>
