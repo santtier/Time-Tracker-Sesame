@@ -1,6 +1,7 @@
 <template>
   <button
-    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+    :class="{ 'bg-green-500': !isClockedIn, 'bg-red-500': isClockedIn  }"
+    class="w-full h-8 text-white text-sm text-font-light py-1 px-4 rounded-xl"
   >
     {{ text }}
   </button>
@@ -12,6 +13,10 @@ export default {
   props: {
     text: {
       type: String,
+      required: true,
+    },
+    isClockedIn: {
+      type: Boolean,
       required: true,
     }
   },

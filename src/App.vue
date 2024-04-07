@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto">
+  <div class=" mx-auto max-w-max bg-neutral-50 flex">
     <TimeTracker />
   </div>
 </template>

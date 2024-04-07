@@ -6,40 +6,34 @@ export const useTimeTrackerStore = defineStore('timeTracker', {
   state: () => ({
     isClockedIn: false,
     timeWorked: 0,
-    employeeId: "",
+    employee: {},
     coordinates: {},
     interval: null
   }),
   actions: {
     async clockIn() {
-      const workEntry = await api.post('/work-entries/clock-in', {
-        employeeId: this.employeeId,
+      await api.post('/work-entries/clock-in', {
+        employeeId: this.employee.id,
         workEntryIn: {
           coordinates: this.coordinates
         }
       })
 
-      const workEntryData = await workEntry.data.data
-
       this.timeWorked = 0
       this.isClockedIn = true
-      clearInterval(this.interval)
-      this.interval = setInterval(() => {
-        this.timeWorked++
-      }, 1000);
+      startTimeWorkedInterval(this)
     },
     async clockOut() {
       const workEntry = await api.post("/work-entries/clock-out", {
-        employeeId: this.employeeId,
+        employeeId: this.employee.id,
         workEntryOut: {
           coordinates: this.coordinates
         },
       });
 
-      const workEntryData = workEntry.data.data
-      clearInterval(this.interval)
       this.isClockedIn = false
-      this.timeWorked = workEntryData.workedSeconds
+      this.timeWorked = workEntry.data.data.workedSeconds
+      stopTimeWorkedInterval(this)
     },
     async getWorkEntries() {
       try {
@@ -47,7 +41,10 @@ export const useTimeTrackerStore = defineStore('timeTracker', {
         const mostRecentWorkEntryData = response.data.data[0]
         const employeeData = mostRecentWorkEntryData.employee
         
-        this.employeeId = employeeData.id
+        this.employee = {
+          id: employeeData.id,
+          name: `${employeeData.firstName} ${employeeData.lastName}`
+        }
         this.coordinates = mostRecentWorkEntryData.workEntryIn.coordinates
         
         if (mostRecentWorkEntryData) {
