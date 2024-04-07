@@ -3,13 +3,19 @@
     <div class="flex items-center px-4">
       <div class="flex flex-none min-w-52 border-r mr-3 border-neutral-200 pr-3 items-center">
         <h3 class="text-sm font-medium px-2">{{ formattedTimeWorked }}</h3>
+        <div v-if="isClockedIn" class="w-full mr-2">
+          <Button :text="'Pausar'" :disabled="true" :isClockedIn="isClockedIn" />
+        </div>
         <div class="w-full">
           <Button :text="buttonText" @click="onButtonClick" :isClockedIn="isClockedIn" />
         </div>
       </div>
       <div class="relative">
         <div class="dropdown-container py-4 w-full h-full flex items-center">
-          <img class="h-10" src="@/assets/batman-avatar.webp" alt="avatar">
+          <div class="relative">
+            <img class="h-10" src="@/assets/batman-avatar.webp" alt="avatar">
+            <div :class="{ 'bg-green-500': isClockedIn, 'bg-gray-400': !isClockedIn }" class="circle h-2 w-2"></div>
+          </div>
           <p class="truncate ml-2 font-semibold">{{ employee.name }}</p>
           <span class="inline-block ml-3 svg-icon"><svg class="w-full h-full stroke-current" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12.7071 14.7071C12.3166 15.0976 11.6834 15.0976 11.2929 14.7071L6.29289 9.70711C5.90237 9.31658 5.90237 8.68342 6.29289 8.29289C6.68342 7.90237 7.31658 7.90237 7.70711 8.29289L12 12.5858L16.2929 8.29289C16.6834 7.90237 17.3166 7.90237 17.7071 8.29289C18.0976 8.68342 18.0976 9.31658 17.7071 9.70711L12.7071 14.7071Z" fill="#000000"></path> </g></svg></span>
         </div>
@@ -126,6 +132,14 @@ export default {
 
 .accounts:hover .dropdown-second-level {
   display: block;
+}
+
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  top: 50%;
+  left: 34px;
+  transform: translate(0, -50%);
 }
 
 </style>

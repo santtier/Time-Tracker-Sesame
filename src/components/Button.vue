@@ -1,7 +1,8 @@
 <template>
   <button
-    :class="{ 'bg-green-500': !isClockedIn, 'bg-red-500': isClockedIn  }"
-    class="w-full h-8 text-white text-sm text-font-light py-1 px-4 rounded-xl"
+    :disabled="disabled"
+    :class="{ 'bg-green-400': !isClockedIn, 'bg-red-500': isClockedIn, 'button-disabled': disabled  }"
+    class="w-full h-8 text-white text-xs font-bold py-1 px-4 rounded-xl hover:shadow-md"
   >
     {{ text }}
   </button>
@@ -18,7 +19,21 @@ export default {
     isClockedIn: {
       type: Boolean,
       required: true,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     }
   },
 };
 </script>
+
+<style scoped>
+.button-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  --tw-bg-opacity: 1;
+  background-color: rgba(209, 213, 219, var(--tw-bg-opacity));
+}
+
+</style>
