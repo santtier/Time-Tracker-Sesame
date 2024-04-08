@@ -25,7 +25,7 @@
             <p class="hover:text-blue-400 flex-1 text-center mr-2">
               <a href="#">Mis Cuentas</a>
             </p>
-            <ul class="absolute w-auto shadow bg-white py-3 rounded-xl rounded-r-none dropdown-second-level">
+            <ul class="absolute w-auto shadow min-w-64 bg-white py-3 rounded-xl rounded-r-none dropdown-second-level">
               <li class="px-4  hover:bg-gray-100" v-for="userAccount in userAccounts" :key="userAccount.account">
                 <div class="flex w-auto rounded-xl max-w-max items-center">
                   <div class="mr-2 h-12 w-12 flex items-center">
@@ -36,7 +36,7 @@
                       <span class="mr-1 font-bold">{{ userAccount.account }}</span>
                       <p class="inline-block">{{ employee.name }}</p>
                     </div>
-                    <span class="text-xs text-gray-400">{{ `Hoy llevas ${userAccount.timeWorked}`}}</span>
+                    <span class="text-xs text-left text-gray-400">{{ `Hoy llevas ${userAccount.timeWorked}`}}</span>
                   </div>
                 </div>
               </li>
