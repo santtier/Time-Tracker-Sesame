@@ -1,5 +1,5 @@
 <template>
-   <div class="bg-white rounded shadow flex">
+  <div class="bg-white rounded shadow flex">
     <div class="flex items-center px-4">
       <div class="flex flex-none min-w-52 border-r mr-3 border-neutral-200 pr-3 items-center">
         <h3 class="text-sm font-medium pr-2">{{ formattedTimeWorked }}</h3>
@@ -10,7 +10,7 @@
           <Button :text="buttonText" @click="onButtonClick" :isClockedIn="isClockedIn" />
         </div>
       </div>
-      <div class="relative">
+      <DropdownMenu>
         <div class="dropdown-container py-4 w-full h-full flex items-center">
           <div class="relative">
             <img class="h-10" src="@/assets/batman-avatar.webp" alt="avatar">
@@ -46,13 +46,14 @@
           <li class="flex cursor-pointer px-4 py-3 mb-2 text-sm justify-center hover:text-blue-400 hover:bg-gray-100"><a href="#">Mi perfil</a></li>
           <li class="flex cursor-pointer px-4 py-3 text-sm justify-center text-red-400 hover:bg-gray-100">Cerrar Sesión</li>
         </ul>
-      </div>
+      </DropdownMenu>
     </div>
   </div>
 </template>
 
 <script>
 import Button from "@/components/Button.vue";
+import DropdownMenu from "@/components/DropdownMenu.vue";
 import { mapActions, mapState } from "pinia";
 import { useTimeTrackerStore } from '@/store'
 import { formatTime } from "@/helpers/helpers";
@@ -61,6 +62,7 @@ export default {
   name: "TimeTracker",
   components: {
     Button,
+    DropdownMenu
   },
   computed: {
     ...mapState(useTimeTrackerStore, ['isClockedIn', 'timeWorked', 'employee']),
