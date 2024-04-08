@@ -2,7 +2,7 @@
    <div class="bg-white rounded shadow flex">
     <div class="flex items-center px-4">
       <div class="flex flex-none min-w-52 border-r mr-3 border-neutral-200 pr-3 items-center">
-        <h3 class="text-sm font-medium px-2">{{ formattedTimeWorked }}</h3>
+        <h3 class="text-sm font-medium pr-2">{{ formattedTimeWorked }}</h3>
         <div v-if="isClockedIn" class="w-full mr-2">
           <Button :text="'Pausar'" :disabled="true" :isClockedIn="isClockedIn" />
         </div>

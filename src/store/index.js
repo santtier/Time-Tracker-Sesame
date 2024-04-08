@@ -27,7 +27,7 @@ export const useTimeTrackerStore = defineStore('timeTracker', {
       } catch (error) {
         console.error("Error clocking in:", error);
         this.error = error
-      },
+      }
     },
     async clockOut() {
       try {

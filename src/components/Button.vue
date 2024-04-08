@@ -2,7 +2,7 @@
   <button
     :disabled="disabled"
     :class="{ 'bg-green-400': !isClockedIn, 'bg-red-500': isClockedIn, 'button-disabled': disabled  }"
-    class="w-full h-8 text-white text-xs font-bold py-1 px-4 rounded-xl hover:shadow-md"
+    class="w-32 h-8 text-white text-xs font-bold py-1 px-4 rounded-xl hover:shadow-md"
   >
     {{ text }}
   </button>
