@@ -25,32 +25,18 @@
             <p class="hover:text-blue-400 flex-1 text-center mr-2">
               <a href="#">Mis Cuentas</a>
             </p>
-            <ul class="absolute w-auto shadow bg-white px-3 py-3 rounded-xl rounded-r-none dropdown-second-level">
-              <li class="px-2 py-2">
+            <ul class="absolute w-auto shadow bg-white py-3 rounded-xl rounded-r-none dropdown-second-level">
+              <li class="px-4  hover:bg-gray-100" v-for="userAccount in userAccounts" :key="userAccount.account">
                 <div class="flex w-auto rounded-xl max-w-max items-center">
                   <div class="mr-2 h-12 w-12 flex items-center">
                     <img class="h-10 w-10" src="@/assets/batman-avatar.webp" alt="avatar">
                   </div>
                   <div class="flex flex-col">
                     <div class="truncate text-sm">
-                      <span class="mr-1 font-bold">Sesame1</span>
+                      <span class="mr-1 font-bold">{{ userAccount.account }}</span>
                       <p class="inline-block">{{ employee.name }}</p>
                     </div>
-                    <span class="text-xs text-gray-400">Hoy llevas 00:00</span>
-                  </div>
-                </div>
-              </li>
-              <li class="px-2">
-                <div class="flex w-auto rounded-xl max-w-max items-center">
-                  <div class="mr-2 h-12 w-12 flex items-center">
-                    <img class="h-10 w-10" src="@/assets/batman-avatar.webp" alt="avatar">
-                  </div>
-                  <div class="flex flex-col">
-                    <div class="truncate text-sm">
-                      <span class="mr-1 font-bold">Sesame2</span>
-                      <p class="inline-block">{{ employee.name }}</p>
-                    </div>
-                    <span class="text-xs text-gray-400">Hoy llevas 00:00</span>
+                    <span class="text-xs text-gray-400">{{ `Hoy llevas ${userAccount.timeWorked}`}}</span>
                   </div>
                 </div>
               </li>
@@ -87,6 +73,16 @@ export default {
   },
   data() {
     return {
+      userAccounts: [
+        {
+          account: 'Sesame1',
+          timeWorked: '00:00'
+        },
+        {
+          account: 'Sesame2',
+          timeWorked: '00:00'
+        }
+    ]
     };
   },
   methods: {
@@ -141,5 +137,4 @@ export default {
   left: 34px;
   transform: translate(0, -50%);
 }
-
 </style>
