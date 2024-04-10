@@ -10,7 +10,7 @@
           <Button :text="buttonText" @click="onButtonClick" :isClockedIn="isClockedIn" />
         </div>
       </div>
-      <div class="relative">
+      <div class="relative" id="dropdownTrigger">
         <div class="py-4 w-full h-full flex items-center cursor-pointer" @click="toggleDropdown">
           <div class="relative">
             <img class="h-10" src="@/assets/batman-avatar.webp" alt="avatar">
@@ -106,7 +106,7 @@ export default {
       this.showAccountsDropdown = !this.showAccountsDropdown;
     },
     closeDropdown(e) {
-      if (!this.$el.contains(e.target) ||  e.target.closest('.close-dropdown')) {
+      if (!document.getElementById('dropdownTrigger').contains(e.target) ||  e.target.closest('.close-dropdown')) {
         this.showDropdown = false;
         this.showAccountsDropdown = false
       }
