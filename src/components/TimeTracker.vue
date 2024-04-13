@@ -106,8 +106,8 @@ export default {
     }
 
     const closeDropdown = () => {
-        showDropdown.value = false;
-        showAccountsDropdown.value = false;
+      showDropdown.value = false;
+      showAccountsDropdown.value = false;
     }
 
     return {
